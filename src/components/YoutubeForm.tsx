@@ -23,7 +23,16 @@ const YoutubeForm = () => {
     console.log("form Submitted", data.username);
   };
   return (
-    <>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <h1>YouTube Form {renderCount / 2}</h1>
       <div
         style={{
@@ -55,12 +64,16 @@ const YoutubeForm = () => {
             <label className={style.label} htmlFor="email">
               Email
             </label>
-            <input type="email" id="email" {...register("email", {
-              required: {
-                value: true, 
-                message: "Email is required"
-              }
-            })} />
+            <input
+              type="email"
+              id="email"
+              {...register("email", {
+                required: {
+                  value: true,
+                  message: "Email is required",
+                },
+              })}
+            />
             {errors.email && (
               <p style={{ color: "red" }}>{errors.email.message}</p>
             )}
@@ -69,24 +82,34 @@ const YoutubeForm = () => {
             <label className={style.label} htmlFor="channel">
               Channel
             </label>
-            <input type="text" id="channel" {...register("channel", {
-              required: {
-                value: true,
-                message: "Channel is required"
-              }
-            })} />
+            <input
+              type="text"
+              id="channel"
+              {...register("channel", {
+                required: {
+                  value: true,
+                  message: "Channel is required",
+                },
+              })}
+            />
             {errors.channel && (
               <p style={{ color: "red" }}>{errors.channel.message}</p>
             )}
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
             <button>Submit</button>
           </div>
           <DevTool control={control} />
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
