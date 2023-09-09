@@ -14,7 +14,13 @@ interface formValue {
 
 const YoutubeForm = () => {
   renderCount++;
-  const form = useForm<formValue>();
+  const form = useForm<formValue>({
+    defaultValues: {
+      username: "Rahat",
+      email: "khrahat92@gmail.com",
+      phone: "01700000000",
+    },
+  });
   const { register, control, handleSubmit, formState } = form;
 
   const { errors } = formState;
@@ -37,7 +43,7 @@ const YoutubeForm = () => {
       <div
         style={{
           // border: "1px solid black",
-          boxShadow: "0 0 2px .5px gray",
+          boxShadow: "0 0 1px .5px gray",
           padding: "1rem",
         }}
       >
@@ -82,7 +88,7 @@ const YoutubeForm = () => {
             )}
           </div>
           <div>
-            <label className={style.label} htmlFor="channel">
+            <label className={style.label} htmlFor="phone">
               Phone No.
             </label>
             <input
