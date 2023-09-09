@@ -15,10 +15,17 @@ interface formValue {
 const YoutubeForm = () => {
   renderCount++;
   const form = useForm<formValue>({
-    defaultValues: {
-      username: "Rahat",
-      email: "khrahat92@gmail.com",
-      phone: "01700000000",
+    defaultValues: async () => {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users/1"
+      );
+      const data = await response.json();
+      console.log(data);
+      return {
+        username: data.name,
+        email: data.email,
+        phone: data.phone ,
+      };
     },
   });
   const { register, control, handleSubmit, formState } = form;
