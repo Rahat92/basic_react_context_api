@@ -8,7 +8,7 @@ let renderCount = 0;
 interface formValue {
   username: string;
   email: string;
-  phone: string;
+  phoneNumbers: string[];
   social: {
     facebook: string;
     tweeter: string;
@@ -27,7 +27,7 @@ const YoutubeForm = () => {
       return {
         username: data.name,
         email: data.email,
-        phone: data.phone,
+        phoneNumbers: ["", ""],
         social: {
           facebook: "facebook",
           tweeter: "tweeter",
@@ -102,21 +102,43 @@ const YoutubeForm = () => {
             )}
           </div>
           <div>
-            <label className={style.label} htmlFor="phone">
-              Phone No.
+            <label className={style.label} htmlFor="primaryPhoneNumber">
+              Primary Phone No.
             </label>
             <input
               type="text"
-              id="phone"
-              {...register("phone", {
+              id="primaryPhoneNumber"
+              {...register("phoneNumbers.0", {
                 required: {
                   value: true,
-                  message: "Phone is required",
+                  message: "Primary Phone Number is required",
                 },
               })}
             />
-            {errors.phone && (
-              <p style={{ color: "red" }}>{errors.phone.message}</p>
+            {errors.phoneNumbers && (
+              <p style={{ color: "red" }}>
+                {errors.phoneNumbers[0] && errors.phoneNumbers[0].message}
+              </p>
+            )}
+          </div>
+          <div>
+            <label className={style.label} htmlFor="secondaryPhoneNumber">
+              Secondary Phone No.
+            </label>
+            <input
+              type="text"
+              id="secondaryPhoneNumber"
+              {...register("phoneNumbers.1", {
+                required: {
+                  value: true,
+                  message: "Secondary Phone Number is required",
+                },
+              })}
+            />
+            {errors.phoneNumbers && (
+              <p style={{ color: "red" }}>
+                {errors.phoneNumbers[1] && errors.phoneNumbers[1].message}
+              </p>
             )}
           </div>
           <div>
