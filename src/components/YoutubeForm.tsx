@@ -9,6 +9,10 @@ interface formValue {
   username: string;
   email: string;
   phone: string;
+  social: {
+    facebook: string;
+    tweeter: string;
+  };
 }
 //types end
 
@@ -20,11 +24,14 @@ const YoutubeForm = () => {
         "https://jsonplaceholder.typicode.com/users/1"
       );
       const data = await response.json();
-      console.log(data);
       return {
         username: data.name,
         email: data.email,
-        phone: data.phone ,
+        phone: data.phone,
+        social: {
+          facebook: "facebook",
+          tweeter: "tweeter",
+        },
       };
     },
   });
@@ -33,7 +40,7 @@ const YoutubeForm = () => {
   const { errors } = formState;
   console.log(errors);
   const onSubmit = (data: formValue) => {
-    console.log("form Submitted", data.username);
+    console.log("form Submitted", data);
   };
   return (
     <div
@@ -110,6 +117,47 @@ const YoutubeForm = () => {
             />
             {errors.phone && (
               <p style={{ color: "red" }}>{errors.phone.message}</p>
+            )}
+          </div>
+          <div>
+            <label className={style.label} htmlFor="facebook">
+              Facebook
+            </label>
+            <input
+              type="text"
+              id="facebook"
+              {...register("social.facebook", {
+                required: {
+                  value: true,
+                  message: "Facebook is required",
+                },
+              })}
+            />
+            {errors.social && (
+              <p style={{ color: "red" }}>
+                {errors.social.facebook && errors.social.facebook.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className={style.label} htmlFor="tweeter">
+              Tweeter
+            </label>
+            <input
+              type="text"
+              id="tweeter"
+              {...register("social.tweeter", {
+                required: {
+                  value: true,
+                  message: "Tweeter is required",
+                },
+              })}
+            />
+            {errors.social && (
+              <p style={{ color: "red" }}>
+                {errors.social.tweeter && errors.social.tweeter.message}
+              </p>
             )}
           </div>
 
