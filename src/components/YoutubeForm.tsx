@@ -8,7 +8,7 @@ let renderCount = 0;
 interface formValue {
   username: string;
   email: string;
-  channel: string;
+  phone: string;
 }
 //types end
 
@@ -33,11 +33,11 @@ const YoutubeForm = () => {
         flexDirection: "column",
       }}
     >
-      <h1>YouTube Form {renderCount / 2}</h1>
+      <h1>Basic Form {renderCount / 2}</h1>
       <div
         style={{
-          display: "inline-block",
-          border: "1px solid black",
+          // border: "1px solid black",
+          boxShadow: "0 0 2px .5px gray",
           padding: "1rem",
         }}
       >
@@ -72,6 +72,9 @@ const YoutubeForm = () => {
                   value: true,
                   message: "Email is required",
                 },
+                validate: (value) => {
+                  return !value.startsWith("admin") || "Admin is not allowed";
+                },
               })}
             />
             {errors.email && (
@@ -80,20 +83,20 @@ const YoutubeForm = () => {
           </div>
           <div>
             <label className={style.label} htmlFor="channel">
-              Channel
+              Phone No.
             </label>
             <input
               type="text"
-              id="channel"
-              {...register("channel", {
+              id="phone"
+              {...register("phone", {
                 required: {
                   value: true,
-                  message: "Channel is required",
+                  message: "Phone is required",
                 },
               })}
             />
-            {errors.channel && (
-              <p style={{ color: "red" }}>{errors.channel.message}</p>
+            {errors.phone && (
+              <p style={{ color: "red" }}>{errors.phone.message}</p>
             )}
           </div>
 
