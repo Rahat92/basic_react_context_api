@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import style from "./YoutubeForm.module.css";
 let renderCount = 0;
@@ -13,6 +13,9 @@ interface formValue {
     facebook: string;
     tweeter: string;
   };
+  phNumbers: {
+    number: string;
+  }[];
 }
 //types end
 
@@ -32,10 +35,15 @@ const YoutubeForm = () => {
           facebook: "facebook",
           tweeter: "tweeter",
         },
+        phNumbers: [{ number: "" }],
       };
     },
   });
   const { register, control, handleSubmit, formState } = form;
+  const { fields, append, remove } = useFieldArray({
+    name: "phNumbers",
+    control,
+  });
 
   const { errors } = formState;
   console.log(errors);
@@ -182,7 +190,31 @@ const YoutubeForm = () => {
               </p>
             )}
           </div>
-
+          <div>
+            <label>List of phone numbers</label>
+          </div>
+          {fields.map((field, index) => {
+            return (
+              <div key = {field.id}>
+                <input
+                  type="text"
+                  placeholder="phoneNumber"
+                  {...register(`phNumbers.${index}.number` as const)}
+                />
+                {index > 0 && (
+                  <button onClick={() => remove(index)}>X</button>
+                )}
+              </div>
+            );
+          })}
+          <div>
+            <button
+              onClick={(() => append({ number: "" }))}
+              type="button"
+            >
+              add more phone numbers
+            </button>
+          </div>
           <div
             style={{
               display: "flex",
