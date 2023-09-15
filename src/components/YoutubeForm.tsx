@@ -16,6 +16,8 @@ interface formValue {
   phNumbers: {
     number: string;
   }[];
+  age: number;
+  dob: Date;
 }
 //types end
 
@@ -36,6 +38,8 @@ const YoutubeForm = () => {
           tweeter: "tweeter",
         },
         phNumbers: [{ number: "" }],
+        age: 0,
+        dob: new Date(),
       };
     },
   });
@@ -48,7 +52,7 @@ const YoutubeForm = () => {
   const { errors } = formState;
   console.log(errors);
   const onSubmit = (data: formValue) => {
-    console.log("form Submitted", data);
+    console.log("form Submitted", data.dob);
   };
   return (
     <div
@@ -191,27 +195,58 @@ const YoutubeForm = () => {
             )}
           </div>
           <div>
+            <label className={style.label} htmlFor="tweeter">
+              Age
+            </label>
+            <input
+              type="number"
+              id="age"
+              {...register("age", {
+                valueAsNumber: true,
+                required: {
+                  value: true,
+                  message: "Age is required",
+                },
+              })}
+            />
+            {errors.age && (
+              <p style={{ color: "red" }}>{errors.age && errors.age.message}</p>
+            )}
+          </div>
+          <div>
+            <label className={style.label} htmlFor="dob">
+              Date Of Birth
+            </label>
+            <input
+              type="date"
+              id="dob"
+              {...register("dob", {
+                valueAsDate: true,
+                required: {
+                  value: true,
+                  message: "Date of birth is required",
+                },
+              })}
+            />
+            {errors.age && <p style={{ color: "red" }}>{errors.age.message}</p>}
+          </div>
+          <div>
             <label>List of phone numbers</label>
           </div>
           {fields.map((field, index) => {
             return (
-              <div key = {field.id}>
+              <div key={field.id}>
                 <input
                   type="text"
                   placeholder="phoneNumber"
                   {...register(`phNumbers.${index}.number` as const)}
                 />
-                {index > 0 && (
-                  <button onClick={() => remove(index)}>X</button>
-                )}
+                {index > 0 && <button onClick={() => remove(index)}>X</button>}
               </div>
             );
           })}
           <div>
-            <button
-              onClick={(() => append({ number: "" }))}
-              type="button"
-            >
+            <button onClick={() => append({ number: "" })} type="button">
               add more phone numbers
             </button>
           </div>
